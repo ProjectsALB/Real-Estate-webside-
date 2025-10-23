@@ -1,0 +1,3 @@
+npm install
+npm run dev
+mongodb://localhost:27017/realestate

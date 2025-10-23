@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HouseSpace - Find Your Dream Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh; 
+            background: url('images/homeRealEstate.jpg') no-repeat center center/cover;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .property-img {
+            height: 230px;
+            object-fit: cover;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+        }
+
+        .card {
+            border-radius: 0.75rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-buy-now {
+            background-color: #043f7e;
+            color: white;
+            border-radius: 50px;
+            padding: 12px 25px;
+            transition: 0.3s;
+        }
+
+        .btn-buy-now:hover:not(:disabled) {
+            background-color: #033468;
+            box-shadow: 0 4px 10px rgba(0, 91, 187, 0.3);
+        }
+
+        .btn-buy-now:disabled {
+            background-color: #aaa !important;
+            cursor: not-allowed;
+        }
+
+        .purchased-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+
+        .countdown-timer {
+            font-size: 0.8rem;
+            color: #dc3545;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .blog-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .btn-read-more {
+            color: #043f7e;
+            border: 1px solid #043f7e;
+            border-radius: 50px;
+            padding: 8px 20px;
+            transition: all 0.3s;
+        }
+        
+        .btn-read-more:hover {
+            background-color: #043f7e;
+            color: white;
+        }
+        
+        .btn-view-all {
+            background-color: #043f7e;
+            color: white;
+            border-radius: 50px;
+            padding: 10px 30px;
+            transition: all 0.3s;
+        }
+        
+        .btn-view-all:hover {
+            background-color: #033468;
+            color: white;
+        }
+        
+        .testimonial-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+        
+        .custom-footer {
+            background-color: #043f7e;
+        }
+        
+        .custom-footer a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .custom-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin-right: 10px;
+        }
+        
+        .social-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .custom-navbar {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .property-details {
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            margin: 10px 0;
+        }
+
+        .property-details i {
+            color: #043f7e;
+            margin-right: 5px;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+        }
+
+        .purchase-item {
+            border-left: 4px solid #28a745;
+        }
+
+        .image-preview-container {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        
+        .invalid-feedback {
+            display: block;
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#" data-i18n="brand">HouseSpace</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home" data-i18n="home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#property" data-i18n="property">Property</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#blog" data-i18n="blog">Blog</a></li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-success ms-2" data-bs-toggle="modal" data-bs-target="#publishPropertyModal">
+                            <i class="bi bi-plus-circle"></i> <span data-i18n="publishProperty">Publish Property</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-info ms-2" data-bs-toggle="modal" data-bs-target="#myPurchasesModal">
+                            <i class="bi bi-bag-check"></i> <span data-i18n="myPurchases">My Purchases</span>
+                        </button>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-i18n="language">
+                            Language
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item language-option" href="#" data-lang="en">English</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item language-option" href="#" data-lang="sq">Shqip (Albanian)</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 data-i18n="findYourDreamHome">Find Your Dream Home</h1>
+            <p data-i18n="exploreProperties">Explore the best properties with HouseSpace</p>
+        </div>
+    </section>
+
+    <!-- Properties Section -->
+    <section id="property" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4" data-i18n="featuredProperties">Featured Properties</h2>
+            <p class="text-center mb-5" data-i18n="discoverProperties">Discover a selection of our best properties for your next dream home.</p>
+            <div class="row g-4" id="propertyList">
+                <!-- Properties will be loaded here from JS -->
+            </div>
+        </div>
+
+        <!-- Buy Now Modal -->
+        <div class="modal fade" id="buyNowModal" tabindex="-1" aria-labelledby="buyNowModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="purchaseForm">
+                        <input type="hidden" id="propertyId" name="propertyId" />
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="buyNowModalLabel" data-i18n="completePurchase">Complete Your Purchase</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="firstName" class="form-label" data-i18n="firstName">First Name</label>
+                                <input type="text" class="form-control" id="firstName" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="lastName" class="form-label" data-i18n="lastName">Last Name</label>
+                                <input type="text" class="form-control" id="lastName" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label" data-i18n="email">Email Address</label>
+                                <input type="email" class="form-control" id="email" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="cardNumber" class="form-label" data-i18n="cardNumber">Card Number</label>
+                                <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456" required />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" data-i18n="submitPayment">Submit Payment</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Publish Property Modal -->
+        <div class="modal fade" id="publishPropertyModal" tabindex="-1" aria-labelledby="publishPropertyModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form id="publishPropertyForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="publishPropertyModalLabel" data-i18n="publishProperty">Publish New Property</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="propertyTitle" class="form-label" data-i18n="propertyTitle">Property Title *</label>
+                                        <input type="text" class="form-control" id="propertyTitle" required>
+                                        <div class="invalid-feedback" data-i18n="titleRequired">Please provide a property title.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="propertyPrice" class="form-label" data-i18n="price">Price (€) *</label>
+                                        <input type="number" class="form-control" id="propertyPrice" min="1" required>
+                                        <div class="invalid-feedback" data-i18n="priceRequired">Please provide a valid price.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="propertyLocation" class="form-label" data-i18n="location">Location *</label>
+                                        <input type="text" class="form-control" id="propertyLocation" required>
+                                        <div class="invalid-feedback" data-i18n="locationRequired">Please provide a location.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="propertyType" class="form-label" data-i18n="propertyType">Property Type</label>
+                                        <select class="form-select" id="propertyType" required>
+                                            <option value="apartment" data-i18n="apartment">Apartment</option>
+                                            <option value="villa" data-i18n="villa">Villa</option>
+                                            <option value="house" data-i18n="house">House</option>
+                                            <option value="townhouse" data-i18n="townhouse">Townhouse</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="propertyBedrooms" class="form-label" data-i18n="bedrooms">Bedrooms *</label>
+                                        <input type="number" class="form-control" id="propertyBedrooms" min="0" required>
+                                        <div class="invalid-feedback" data-i18n="bedroomsRequired">Please provide number of bedrooms.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="propertyBathrooms" class="form-label" data-i18n="bathrooms">Bathrooms *</label>
+                                        <input type="number" class="form-control" id="propertyBathrooms" min="0" required>
+                                        <div class="invalid-feedback" data-i18n="bathroomsRequired">Please provide number of bathrooms.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="propertyArea" class="form-label" data-i18n="area">Area (m²) *</label>
+                                        <input type="number" class="form-control" id="propertyArea" min="1" required>
+                                        <div class="invalid-feedback" data-i18n="areaRequired">Please provide a valid area.</div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="propertyAmenities" class="form-label" data-i18n="amenities">Amenities (comma separated)</label>
+                                        <input type="text" class="form-control" id="propertyAmenities" placeholder="parking,garden,pool">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Image Upload Section -->
+                            <div class="mb-3">
+                                <label for="propertyImages" class="form-label" data-i18n="propertyImages">Property Images *</label>
+                                <input type="file" class="form-control" id="propertyImages" accept="image/*" multiple required>
+                                <div class="form-text" data-i18n="imageHelp">Select multiple images (JPEG, PNG, GIF, WebP). First image will be the main one.</div>
+                                <!-- Image preview will appear here -->
+                                <div id="imagePreview" class="image-preview-container mt-2"></div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="propertyDescription" class="form-label" data-i18n="description">Description *</label>
+                                <textarea class="form-control" id="propertyDescription" rows="4" required></textarea>
+                                <div class="invalid-feedback" data-i18n="descriptionRequired">Please provide a description.</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="cancel">Cancel</button>
+                            <button type="submit" class="btn btn-success" data-i18n="publishProperty">Publish Property</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Purchases Modal -->
+        <div class="modal fade" id="myPurchasesModal" tabindex="-1" aria-labelledby="myPurchasesModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myPurchasesModalLabel" data-i18n="myPurchases">My Purchases</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="purchasesList">
+                            <!-- Purchases will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4" data-i18n="testimonials">What Our Clients Say</h2>
+            <p class="text-center mb-5" data-i18n="testimonialsDesc">We take pride in our satisfied clients. Here are some of the testimonials they shared with us.</p>
+            <div class="row g-4">
+                <!-- Testimonial 1 -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0 rounded">
+                        <div class="card-body text-center">
+                            <img src="images/client1.jpg" alt="Client 1" class="img-fluid rounded-circle mb-3 testimonial-img">
+                            <h5 class="card-title" data-i18n="johnDoe">John Doe</h5>
+                            <p class="card-text" data-i18n="testimonial1">"HouseSpace made the process of finding my dream home so easy. They really listened to my needs and helped me find the perfect place!"</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Testimonial 2 -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0 rounded">
+                        <div class="card-body text-center">
+                            <img src="images/client2.jpg" alt="Client 2" class="img-fluid rounded-circle mb-3 testimonial-img">
+                            <h5 class="card-title" data-i18n="janeSmith">Jane Smith</h5>
+                            <p class="card-text" data-i18n="testimonial2">"I had a fantastic experience working with HouseSpace. Their team was professional and supportive throughout the entire home-buying journey."</p>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- Testimonial 3 -->
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0 rounded">
+                        <div class="card-body text-center">
+                            <img src="images/client3.jpg" alt="Client 3" class="img-fluid rounded-circle mb-3 testimonial-img">
+                            <h5 class="card-title" data-i18n="emilyDavis">Emily Davis</h5>
+                            <p class="card-text" data-i18n="testimonial3">"HouseSpace helped me find the perfect family home. Their expertise and attention to detail made all the difference!"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4" data-i18n="latestBlog">Latest From Our Blog</h2>
+            <p class="text-center mb-5" data-i18n="blogDesc">Get expert advice, market updates, and home inspiration.</p>
+            
+            <!-- Add New Blog Post Button -->
+            <div class="text-center mb-4">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBlogModal">
+                    <i class="fas fa-plus me-2"></i><span data-i18n="addBlogPost">Add New Blog Post</span>
+                </button>
+            </div>
+            
+            <div class="row g-4" id="blogPostsContainer">
+                <!-- Blog posts will be loaded here dynamically -->
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-view-all" data-i18n="viewAllPosts">View All Blog Posts</a>
+            </div>
+        </div>
+
+        <!-- Add Blog Post Modal -->
+        <div class="modal fade" id="addBlogModal" tabindex="-1" aria-labelledby="addBlogModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="blogPostForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addBlogModalLabel" data-i18n="addBlogPost">Add New Blog Post</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="blogTitle" class="form-label" data-i18n="title">Title</label>
+                                <input type="text" class="form-control" id="blogTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="blogDescription" class="form-label" data-i18n="description">Description</label>
+                                <textarea class="form-control" id="blogDescription" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="blogImage" class="form-label" data-i18n="image">Image</label>
+                                <input type="file" class="form-control" id="blogImage" accept="image/*" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="blogLink" class="form-label" data-i18n="link">Link</label>
+                                <input type="url" class="form-control" id="blogLink" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="blogDate" class="form-label" data-i18n="postDate">Post Date</label>
+                                <input type="date" class="form-control" id="blogDate" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="cancel">Cancel</button>
+                            <button type="submit" class="btn btn-primary" data-i18n="addBlogPost">Add Blog Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="custom-footer text-white py-5">
+        <div class="container">
+            <div class="row gy-4">
+                <!-- Logo & Copyright -->
+                <div class="col-md-4 text-center text-md-start">
+                    <h4 class="mb-3">🏠 <span data-i18n="brand">HouseSpace</span></h4>
+                    <p class="mb-1">"<span data-i18n="footerSlogan">The right solution for every property.</span>"</p>
+                    <p class="small">&copy; 2025 <span data-i18n="brand">HouseSpace</span>. <span data-i18n="allRights">All rights reserved.</span></p>
+                </div>
+        
+                <!-- Quick Links -->
+                <div class="col-md-4 text-center">
+                    <h5 class="mb-3" data-i18n="quickLinks">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#home"><i class="fas fa-angle-right me-1"></i><span data-i18n="home">Home</span></a></li>
+                        <li class="mb-2"><a href="#property"><i class="fas fa-angle-right me-1"></i><span data-i18n="property">Properties</span></a></li>
+                        <li class="mb-2"><a href="#agent"><i class="fas fa-angle-right me-1"></i><span data-i18n="agent">Agent</span></a></li>
+                        <li class="mb-2"><a href="#blog"><i class="fas fa-angle-right me-1"></i><span data-i18n="blog">Blog</span></a></li>
+                    </ul>
+                </div>
+        
+                <!-- Contact Info -->
+                <div class="col-md-4 text-center text-md-start">
+                    <h5 class="mb-3" data-i18n="contactUs">Contact Us</h5>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt"></i> <span data-i18n="address">Rruga "Blloku", Tirana</span></li>
+                        <li class="mb-2"><i class="fas fa-envelope"></i> <a href="mailto:info@housespace.com">info@housespace.com</a></li>
+                        <li class="mb-2"><i class="fas fa-phone"></i> <a href="tel:+1234567890">+123 456 7890</a></li>
+                        <li class="mb-2"><i class="fas fa-clock"></i> <span data-i18n="workingHours">Mon - Fri, 09:00 - 18:00</span></li>
+                        <li class="mb-2"><i class="fab fa-instagram"></i> <a href="#">@house.space</a></li>
+                        <li class="mb-2"><i class="fab fa-instagram"></i> <a href="https://github.com/ProjectsALB">Made by KS</a></li>
+                    </ul>
+        
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <script>
+        // Current language variable
+        let currentLanguage = localStorage.getItem('selectedLanguage') || 'en';
+
+        // API Base URL
+        const API_BASE_URL = 'http://localhost:5000/api';
+
+        // Load properties from backend
+        async function loadPropertiesFromBackend() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/properties`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    return data.data;
+                } else {
+                    throw new Error('Failed to load properties');
+                }
+            } catch (error) {
+                console.error('Error loading properties from backend:', error);
+                return [];
+            }
+        }
+
+        // Render properties from backend
+        async function renderPropertiesFromBackend() {
+            const container = document.getElementById("propertyList");
+            if (!container) return;
+            
+            // Show loading
+            container.innerHTML = `
+                <div class="col-12 text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2" data-i18n="loadingProperties">Loading properties...</p>
+                </div>
+            `;
+            
+            try {
+                const propertiesFromBackend = await loadPropertiesFromBackend();
+                
+                if (propertiesFromBackend.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-12 text-center">
+                            <div class="alert alert-info">
+                                <i class="bi bi-info-circle"></i>
+                                <span data-i18n="noProperties">No properties available. Be the first to publish one!</span>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = propertiesFromBackend.map(property => {
+                    const isPurchased = !property.isAvailable;
+
+                    return `
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm border-0 position-relative">
+                                ${isPurchased ? '<span class="purchased-badge" data-i18n="sold">Sold</span>' : ''}
+                                
+                                <!-- Property Images Carousel -->
+                                <div id="carousel-${property._id}" class="carousel slide">
+                                    <div class="carousel-inner">
+                                        ${property.images.map((image, index) => `
+                                            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                                <img src="${image}" class="d-block w-100 property-img" alt="${property.title}">
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    ${property.images.length > 1 ? `
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-${property._id}" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-${property._id}" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    ` : ''}
+                                </div>
+                                
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">${property.title}</h5>
+                                    <p class="card-text">${property.description}</p>
+                                    <div class="property-details mb-2">
+                                        <small class="text-muted">
+                                            <i class="bi bi-geo-alt"></i> ${property.location}<br>
+                                            <i class="bi bi-house-door"></i> ${property.type} | 
+                                            <i class="bi bi-door-closed"></i> ${property.bedrooms}bd | 
+                                            <i class="bi bi-droplet"></i> ${property.bathrooms}ba | 
+                                            <i class="bi bi-arrows-fullscreen"></i> ${property.area}m²
+                                        </small>
+                                    </div>
+                                    <h5 class="card-title text-primary">${translations[currentLanguage]['price']}: €${property.price.toLocaleString()}</h5>
+                                    <button class="btn btn-buy-now mt-2" 
+                                        data-property-id="${property._id}" 
+                                        ${isPurchased ? 'disabled' : ''}
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#buyNowModal">
+                                        ${isPurchased ? translations[currentLanguage]['alreadyPurchased'] : translations[currentLanguage]['buyNow']}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Add event listeners to new Buy Now buttons
+                attachBuyNowListeners();
+
+            } catch (error) {
+                console.error('Error rendering properties:', error);
+                container.innerHTML = `
+                    <div class="col-12 text-center">
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            <span data-i18n="errorLoadingProperties">Error loading properties. Please try again later.</span>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Image preview functionality
+        document.getElementById('propertyImages')?.addEventListener('change', function(e) {
+            const previewContainer = document.getElementById('imagePreview');
+            previewContainer.innerHTML = '';
+
+            const files = e.target.files;
+            console.log('📸 Selected files:', files);
+
+            if (files.length === 0) {
+                previewContainer.innerHTML = '<small class="text-muted">No images selected</small>';
+                return;
+            }
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const col = document.createElement('div');
+                        col.className = 'col-md-3 mb-2';
+                        col.innerHTML = `
+                            <div class="position-relative">
+                                <img src="${e.target.result}" class="img-thumbnail" style="height: 100px; object-fit: cover; width: 100%;">
+                                <small class="text-muted d-block mt-1">${file.name}</small>
+                            </div>
+                        `;
+                        previewContainer.appendChild(col);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        // Handle property publication form with image upload
+        document.getElementById('publishPropertyForm')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            try {
+                // Show loading
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Publishing...';
+                submitBtn.disabled = true;
+                
+                // Get form values
+                const title = document.getElementById('propertyTitle').value.trim();
+                const description = document.getElementById('propertyDescription').value.trim();
+                const price = document.getElementById('propertyPrice').value;
+                const location = document.getElementById('propertyLocation').value.trim();
+                const type = document.getElementById('propertyType').value;
+                const bedrooms = document.getElementById('propertyBedrooms').value;
+                const bathrooms = document.getElementById('propertyBathrooms').value;
+                const area = document.getElementById('propertyArea').value;
+                const amenities = document.getElementById('propertyAmenities').value;
+
+                console.log('📝 Form values:', {
+                    title, description, price, location, type, bedrooms, bathrooms, area, amenities
+                });
+
+                // Validate required fields
+                if (!title) throw new Error('Property title is required');
+                if (!description) throw new Error('Description is required');
+                if (!price) throw new Error('Price is required');
+                if (!location) throw new Error('Location is required');
+                if (!bedrooms) throw new Error('Bedrooms is required');
+                if (!bathrooms) throw new Error('Bathrooms is required');
+                if (!area) throw new Error('Area is required');
+
+                // Validate numbers
+                const priceNum = parseFloat(price);
+                const bedroomsNum = parseInt(bedrooms);
+                const bathroomsNum = parseInt(bathrooms);
+                const areaNum = parseFloat(area);
+
+                if (isNaN(priceNum)) throw new Error('Price must be a valid number');
+                if (isNaN(bedroomsNum)) throw new Error('Bedrooms must be a valid number');
+                if (isNaN(bathroomsNum)) throw new Error('Bathrooms must be a valid number');
+                if (isNaN(areaNum)) throw new Error('Area must be a valid number');
+
+                if (priceNum <= 0) throw new Error('Price must be greater than 0');
+                if (bedroomsNum < 0) throw new Error('Bedrooms cannot be negative');
+                if (bathroomsNum < 0) throw new Error('Bathrooms cannot be negative');
+                if (areaNum <= 0) throw new Error('Area must be greater than 0');
+
+                // Create FormData
+                const formData = new FormData();
+                formData.append('title', title);
+                formData.append('description', description);
+                formData.append('price', price);
+                formData.append('location', location);
+                formData.append('type', type);
+                formData.append('bedrooms', bedrooms);
+                formData.append('bathrooms', bathrooms);
+                formData.append('area', area);
+                formData.append('amenities', amenities);
+                
+                // Append images
+                const imageFiles = document.getElementById('propertyImages').files;
+                console.log('📁 Image files to upload:', imageFiles);
+                
+                for (let i = 0; i < imageFiles.length; i++) {
+                    formData.append('images', imageFiles[i]);
+                }
+                
+                // Log FormData contents
+                for (let [key, value] of formData.entries()) {
+                    console.log(`📦 FormData: ${key} = ${value}`);
+                }
+                
+                console.log('🚀 Sending request to server...');
+                
+                const response = await fetch(`${API_BASE_URL}/properties/create`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                console.log('📨 Server response:', result);
+                
+                if (result.success) {
+                    // Show success message
+                    alert(translations[currentLanguage]['propertyPublishedSuccess']);
+                    
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('publishPropertyModal'));
+                    modal.hide();
+                    
+                    // Reset form
+                    this.reset();
+                    document.getElementById('imagePreview').innerHTML = '';
+                    
+                    // Refresh properties list
+                    await renderPropertiesFromBackend();
+                    
+                } else {
+                    throw new Error(result.message);
+                }
+                
+            } catch (error) {
+                console.error('❌ Error publishing property:', error);
+                alert(translations[currentLanguage]['publishError'] + ': ' + error.message);
+            } finally {
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Handle purchase form submission
+        document.getElementById("purchaseForm")?.addEventListener("submit", async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            try {
+                // Show loading
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Processing...';
+                submitBtn.disabled = true;
+                
+                const propertyId = document.getElementById("propertyId").value;
+                const firstName = document.getElementById("firstName").value;
+                const lastName = document.getElementById("lastName").value;
+                const email = document.getElementById("email").value;
+                const cardNumber = document.getElementById("cardNumber").value;
+                
+                const purchaseData = {
+                    propertyId,
+                    firstName,
+                    lastName,
+                    email,
+                    cardNumber
+                };
+                
+                const response = await fetch(`${API_BASE_URL}/purchases`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(purchaseData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success message
+                    alert(translations[currentLanguage]['purchaseSuccess']);
+                    
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById("buyNowModal"));
+                    modal?.hide();
+                    
+                    // Reset form
+                    this.reset();
+                    
+                    // Refresh properties list
+                    await renderPropertiesFromBackend();
+                    
+                } else {
+                    throw new Error(result.message);
+                }
+                
+            } catch (error) {
+                console.error('Error processing purchase:', error);
+                alert(translations[currentLanguage]['purchaseError'] + ': ' + error.message);
+            } finally {
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Load and display user purchases
+        async function loadUserPurchases() {
+            const container = document.getElementById('purchasesList');
+            if (!container) return;
+            
+            const userEmail = prompt(translations[currentLanguage]['enterEmailForPurchases']);
+            if (!userEmail) return;
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/purchases/user?email=${encodeURIComponent(userEmail)}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    if (result.data.length === 0) {
+                        container.innerHTML = `
+                            <div class="text-center">
+                                <i class="bi bi-bag-x" style="font-size: 3rem; color: #6c757d;"></i>
+                                <p class="mt-3" data-i18n="noPurchases">No purchases found for this email.</p>
+                            </div>
+                        `;
+                    } else {
+                        container.innerHTML = result.data.map(purchase => `
+                            <div class="card mb-3 purchase-item">
+                                <div class="card-body">
+                                    <h5 class="card-title">${purchase.propertyTitle || 'Property'}</h5>
+                                    <p class="card-text">
+                                        <strong data-i18n="location">Location:</strong> ${purchase.propertyLocation || 'N/A'}<br>
+                                        <strong data-i18n="price">Price:</strong> €${purchase.amount.toLocaleString()}<br>
+                                        <strong data-i18n="purchaseDate">Purchase Date:</strong> ${new Date(purchase.createdAt).toLocaleDateString()}<br>
+                                        <strong data-i18n="purchaser">Purchaser:</strong> ${purchase.firstName} ${purchase.lastName}<br>
+                                        <strong data-i18n="email">Email:</strong> ${purchase.email}
+                                    </p>
+                                    <span class="badge bg-success" data-i18n="completed">Completed</span>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error loading purchases:', error);
+                container.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        ${translations[currentLanguage]['errorLoadingPurchases']}
+                    </div>
+                `;
+            }
+        }
+
+        // Helper function to attach event listeners
+        function attachBuyNowListeners() {
+            document.querySelectorAll('.btn-buy-now:not(:disabled)').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.getElementById('propertyId').value = this.getAttribute('data-property-id');
+                });
+            });
+        }
+
+        // Initialize My Purchases modal
+        document.getElementById('myPurchasesModal')?.addEventListener('show.bs.modal', loadUserPurchases);
+
+        // Static blog posts (never expire)
+        const staticBlogPosts = [
+            {
+                id: "static-1",
+                titleKey: "blogTitle1",
+                descriptionKey: "blogDesc1",
+                image: "images/blog1.jpg",
+                link: "https://retipster.com/blog/",
+                date: "2025-01-01T00:00:00Z",
+                isStatic: true
+            },
+            {
+                id: "static-2",
+                titleKey: "blogTitle2",
+                descriptionKey: "blogDesc2",
+                image: "images/blog2.jpg",
+                link: "https://theclose.com/",
+                date: "2025-01-02T00:00:00Z",
+                isStatic: true
+            },
+            {
+                id: "static-3",
+                titleKey: "blogTitle3",
+                descriptionKey: "blogDesc3",
+                image: "images/blog3.jpg",
+                link: "https://www.realtor.com/homemade/",
+                date: "2025-01-03T00:00:00Z",
+                isStatic: true
+            }
+        ];
+
+        // User-added blog posts (expire after 2 days)
+        let userBlogPosts = [];
+
+        // Load user posts from localStorage if available
+        if (localStorage.getItem('userBlogPosts')) {
+            userBlogPosts = JSON.parse(localStorage.getItem('userBlogPosts'));
+            checkExpiredBlogPosts();
+        }
+
+        // Function to check and remove expired blog posts
+        function checkExpiredBlogPosts() {
+            const now = new Date();
+            const initialCount = userBlogPosts.length;
+            
+            userBlogPosts = userBlogPosts.filter(post => {
+                return new Date(post.expiresAt) > now;
+            });
+
+            if (userBlogPosts.length !== initialCount) {
+                localStorage.setItem('userBlogPosts', JSON.stringify(userBlogPosts));
+            }
+            
+            return userBlogPosts;
+        }
+
+        // Function to render all blog posts
+        function renderBlogPosts() {
+            const container = document.getElementById('blogPostsContainer');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            // Combine static and user posts
+            const allPosts = [...staticBlogPosts, ...checkExpiredBlogPosts()];
+            
+            // Sort all posts by date (newest first)
+            const sortedPosts = [...allPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            sortedPosts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'col-md-4 mb-4';
+                
+                let expirationInfo = '';
+                if (!post.isStatic) {
+                    const timeLeft = new Date(post.expiresAt) - new Date();
+                    const daysLeft = Math.ceil(timeLeft / (1000 * 60 * 60 * 24));
+                    expirationInfo = `<small class="text-danger fw-bold d-block">${translations[currentLanguage]['expiresIn']}: ${daysLeft} ${translations[currentLanguage]['days']}${daysLeft !== 1 ? 's' : ''}</small>`;
+                }
+                
+                const title = post.isStatic ? translations[currentLanguage][post.titleKey] : post.title;
+                const description = post.isStatic ? translations[currentLanguage][post.descriptionKey] : post.description;
+                
+                postElement.innerHTML = `
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="${post.image}" class="card-img-top blog-img" alt="${title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${title}</h5>
+                            <p class="card-text text-muted">${description}</p>
+                            <a href="${post.link}" target="_blank" class="btn btn-read-more">${translations[currentLanguage]['readMore']}</a>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <small class="text-muted d-block">${translations[currentLanguage]['posted']}: ${formatDate(post.date)}</small>
+                            ${expirationInfo}
+                        </div>
+                    </div>
+                `;
+                container.appendChild(postElement);
+            });
+        }
+
+        // Function to format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        // Handle blog post form submission
+        document.getElementById('blogPostForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('blogTitle').value;
+            const description = document.getElementById('blogDescription').value;
+            const link = document.getElementById('blogLink').value;
+            const date = document.getElementById('blogDate').value || new Date().toISOString();
+            const imageFile = document.getElementById('blogImage').files[0];
+            
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const newPost = {
+                        id: Date.now().toString(),
+                        title,
+                        description,
+                        image: e.target.result,
+                        link,
+                        date,
+                        expiresAt: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString()
+                    };
+                    
+                    userBlogPosts.push(newPost);
+                    localStorage.setItem('userBlogPosts', JSON.stringify(userBlogPosts));
+                    
+                    renderBlogPosts();
+                    
+                    // Close modal and reset form
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addBlogModal'));
+                    modal?.hide();
+                    e.target.form.reset();
+                };
+                reader.readAsDataURL(imageFile);
+            }
+        });
+
+        // Language translations
+        const translations = {
+            en: {
+                "brand": "HouseSpace",
+                "home": "Home",
+                "property": "Property",
+                "blog": "Blog",
+                "language": "Language",
+                "findYourDreamHome": "Find Your Dream Home",
+                "exploreProperties": "Explore the best properties with HouseSpace",
+                "featuredProperties": "Featured Properties",
+                "discoverProperties": "Discover a selection of our best properties for your next dream home.",
+                "completePurchase": "Complete Your Purchase",
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "email": "Email Address",
+                "cardNumber": "Card Number",
+                "submitPayment": "Submit Payment",
+                "buyNow": "Buy Now",
+                "alreadyPurchased": "Already Purchased",
+                "availableIn": "Available in:",
+                "sold": "Sold",
+                "price": "Price:",
+                "testimonials": "What Our Clients Say",
+                "testimonialsDesc": "We take pride in our satisfied clients. Here are some of the testimonials they shared with us.",
+                "latestBlog": "Latest From Our Blog",
+                "blogDesc": "Get expert advice, market updates, and home inspiration.",
+                "addBlogPost": "Add New Blog Post",
+                "title": "Title",
+                "description": "Description",
+                "image": "Image",
+                "link": "Link",
+                "postDate": "Post Date",
+                "cancel": "Cancel",
+                "readMore": "Read More",
+                "posted": "Posted",
+                "expiresIn": "Expires in",
+                "days": "day",
+                "viewAllPosts": "View All Blog Posts",
+                "footerSlogan": "The right solution for every property",
+                "allRights": "All rights reserved",
+                "quickLinks": "Quick Links",
+                "contactUs": "Contact Us",
+                "address": "Rruga \"Blloku\", Tirana",
+                "workingHours": "Mon - Fri, 09:00 - 18:00",
+                "agent": "Agent",
+                "johnDoe": "John Doe",
+                "janeSmith": "Jane Smith",
+                "emilyDavis": "Emily Davis",
+                "testimonial1": "\"HouseSpace made the process of finding my dream home so easy. They really listened to my needs and helped me find the perfect place!\"",
+                "testimonial2": "\"I had a fantastic experience working with HouseSpace. Their team was professional and supportive throughout the entire home-buying journey.\"",
+                "testimonial3": "\"HouseSpace helped me find the perfect family home. Their expertise and attention to detail made all the difference!\"",
+                "modernApartment": "Modern apartment in the city center",
+                "modernApartmentDesc": "Modern apartment in the city center with spacious living room and balcony.",
+                "luxuryVilla": "Luxurious villa near the beach",
+                "luxuryVillaDesc": "Luxurious villa near the beach with a garden and swimming pool.",
+                "countrysideHome": "Cozy countryside home",
+                "countrysideHomeDesc": "Cozy countryside home with 2 bedrooms and a private patio.",
+                "elegantHome": "Elegant home with rooftop terrace",
+                "elegantHomeDesc": "Elegant home with modern kitchen, 3 bedrooms and a rooftop terrace.",
+                "urbanApartment": "Urban apartment in quiet neighborhood",
+                "urbanApartmentDesc": "Urban apartment located in a quiet neighborhood, great for families.",
+                "charmingTownhouse": "Charming townhouse with private parking",
+                "charmingTownhouseDesc": "Charming townhouse with private parking and renovated interiors.",
+                "blogTitle1": "First-Time Home Buyer's Complete Checklist",
+                "blogDesc1": "Everything you need to know before making your first home purchase.",
+                "blogTitle2": "How to Stage Your Home for a Quick Sale",
+                "blogDesc2": "Professional tips to make your home more appealing to buyers.",
+                "blogTitle3": "2025 Housing Market Predictions",
+                "blogDesc3": "What experts are saying about this year's real estate trends.",
+                "purchaseSuccess": "Thank you for your purchase! The property is now yours.",
+                "purchaseError": "Error processing purchase",
+                "publishProperty": "Publish Property",
+                "propertyTitle": "Property Title",
+                "location": "Location",
+                "propertyType": "Property Type",
+                "apartment": "Apartment",
+                "villa": "Villa",
+                "house": "House",
+                "townhouse": "Townhouse",
+                "bedrooms": "Bedrooms",
+                "bathrooms": "Bathrooms",
+                "area": "Area",
+                "amenities": "Amenities",
+                "propertyImages": "Property Images",
+                "imageHelp": "Select multiple images (JPEG, PNG, GIF, WebP). First image will be the main one.",
+                "loadingProperties": "Loading properties...",
+                "errorLoadingProperties": "Error loading properties",
+                "noProperties": "No properties available. Be the first to publish one!",
+                "propertyPublishedSuccess": "Property published successfully!",
+                "publishError": "Error publishing property",
+                "myPurchases": "My Purchases",
+                "enterEmailForPurchases": "Please enter your email to view your purchases:",
+                "noPurchases": "No purchases found for this email.",
+                "errorLoadingPurchases": "Error loading purchases",
+                "purchaseDate": "Purchase Date",
+                "purchaser": "Purchaser",
+                "completed": "Completed",
+                "titleRequired": "Please provide a property title.",
+                "priceRequired": "Please provide a valid price.",
+                "locationRequired": "Please provide a location.",
+                "bedroomsRequired": "Please provide number of bedrooms.",
+                "bathroomsRequired": "Please provide number of bathrooms.",
+                "areaRequired": "Please provide a valid area.",
+                "descriptionRequired": "Please provide a description."
+            },
+            sq: {
+                "brand": "HouseSpace",
+                "home": "Kryefaqja",
+                "property": "Prona",
+                "blog": "Blog",
+                "language": "Gjuha",
+                "findYourDreamHome": "Gjeni Shtëpinë e Ëndrrave Tuaja",
+                "exploreProperties": "Eksploroni pronat më të mira me HouseSpace",
+                "featuredProperties": "Prona të Zgjedhura",
+                "discoverProperties": "Zbuloni një përzgjedhje të pronave tona më të mira për shtëpinë tuaj të ëndrrave.",
+                "completePurchase": "Përfundoni Blerjen",
+                "firstName": "Emri",
+                "lastName": "Mbiemri",
+                "email": "Email",
+                "cardNumber": "Numri i Kartës",
+                "submitPayment": "Dërgo Pagesën",
+                "buyNow": "Bli Tani",
+                "alreadyPurchased": "E Blerë",
+                "availableIn": "E disponueshme për:",
+                "sold": "E Shitur",
+                "price": "Çmimi:",
+                "testimonials": "Çfarë Thonë Klientët Tanë",
+                "testimonialsDesc": "Ne krenohemi me klientët tanë të kënaqur. Ja disa nga dëshmitë që ndanë me ne.",
+                "latestBlog": "Postimet e Fundit nga Blogu",
+                "blogDesc": "Merrni këshilla ekspertësh, përditësime të tregut dhe frymëzim për shtëpi.",
+                "addBlogPost": "Shto Postim të Ri",
+                "title": "Titulli",
+                "description": "Përshkrimi",
+                "image": "Imazhi",
+                "link": "Linku",
+                "postDate": "Data e Postimit",
+                "cancel": "Anulo",
+                "readMore": "Lexo Më Shumë",
+                "posted": "Postuar",
+                "expiresIn": "Skadon për",
+                "days": "ditë",
+                "viewAllPosts": "Shiko Të Gjitha Postimet",
+                "footerSlogan": "Zgjidhja e duhur për çdo pronë",
+                "allRights": "Të gjitha të drejtat e rezervuara",
+                "quickLinks": "Lidhje të Shpejta",
+                "contactUs": "Na Kontaktoni",
+                "address": "Rruga \"Blloku\", Tiranë",
+                "workingHours": "E hënë - E premte, 09:00 - 18:00",
+                "agent": "Agjenti",
+                "johnDoe": "Gjon Paloka",
+                "janeSmith": "Jana Smiti",
+                "emilyDavis": "Emili Dejvis",
+                "testimonial1": "\"HouseSpace e bëri procesin e gjetjes së shtëpisë sime të ëndrrave shumë të lehtë. Ata dëgjuan nevojat e mia dhe më ndihmuan të gjej vendin perfekt!\"",
+                "testimonial2": "\"Pata një përvojë të shkëlqyer duke punuar me HouseSpace. Ekipi i tyre ishte profesional dhe mbështetës gjatë gjithë udhëtimit të blerjes së shtëpisë.\"",
+                "testimonial3": "\"HouseSpace më ndihmoi të gjej shtëpinë perfekte për familjen. Ekspertiza e tyre dhe vëmendja ndaj detajeve bënë të gjithë ndryshimin!\"",
+                "modernApartment": "Apartament modern në qendër të qytetit",
+                "modernApartmentDesc": "Apartament modern në qendër të qytetit me dhomë të madhe të jetesës dhe ballkon.",
+                "luxuryVilla": "Vilë luksoze pranë plazhit",
+                "luxuryVillaDesc": "Vilë luksoze pranë plazhit me kopsht dhe pishinë.",
+                "countrysideHome": "Shtëpi e rehatshme në fshat",
+                "countrysideHomeDesc": "Shtëpi e rehatshme në fshat me 2 dhoma gjumi dhe oborr privat.",
+                "elegantHome": "Shtëpi elegante me tarracë në çati",
+                "elegantHomeDesc": "Shtëpi elegante me kuzhinë moderne, 3 dhoma gjumi dhe tarracë në çati.",
+                "urbanApartment": "Apartament urban në lagje të qetë",
+                "urbanApartmentDesc": "Apartament urban i vendosur në një lagje të qetë, i shkëlqyer për familjet.",
+                "charmingTownhouse": "Shtëpi e bukur me parking privat",
+                "charmingTownhouseDesc": "Shtëpi e bukur me parking privat dhe ambiente të rinovuara.",
+                "blogTitle1": "Lista e Plotë për Blerësit e Parë të Shtëpisë",
+                "blogDesc1": "Gjithçka që duhet të dini përpara se të bëni blerjen tuaj të parë të shtëpisë.",
+                "blogTitle2": "Si të Përgatisni Shtëpinë Tuaj për Një Shitje të Shpejtë",
+                "blogDesc2": "Këshilla profesionale për ta bërë shtëpinë tuaj më tërheqëse për blerësit.",
+                "blogTitle3": "Parashikimet e Tregut të Pasurive të Paluajtshme për 2025",
+                "blogDesc3": "Çfarë thonë ekspertët për trendet e këtij viti në pasuri të paluajtshme.",
+                "purchaseSuccess": "Faleminderit për blerjen! Prona tani është e juaja.",
+                "purchaseError": "Gabim në përpunimin e blerjes",
+                "publishProperty": "Publiko Pronë",
+                "propertyTitle": "Titulli i Pronës",
+                "location": "Lokacioni",
+                "propertyType": "Lloji i Pronës",
+                "apartment": "Apartament",
+                "villa": "Vilë",
+                "house": "Shtëpi",
+                "townhouse": "Shtëpi në rresht",
+                "bedrooms": "Dhoma gjumi",
+                "bathrooms": "Banjo",
+                "area": "Sipërfaqja",
+                "amenities": "Pajisje",
+                "propertyImages": "Foto të Pronës",
+                "imageHelp": "Zgjidhni foto të shumta (JPEG, PNG, GIF, WebP). Fotoja e parë do të jetë kryesore.",
+                "loadingProperties": "Duke ngarkuar pronat...",
+                "errorLoadingProperties": "Gabim në ngarkimin e pronave",
+                "noProperties": "Nuk ka prona të disponueshme. Bëhu i pari që publikon një!",
+                "propertyPublishedSuccess": "Prona u publikua me sukses!",
+                "publishError": "Gabim në publikimin e pronës",
+                "myPurchases": "Blerjet e Mia",
+                "enterEmailForPurchases": "Ju lutem shkruani email-in tuaj për të parë blerjet:",
+                "noPurchases": "Nuk u gjetën blerje për këtë email.",
+                "errorLoadingPurchases": "Gabim në ngarkimin e blerjeve",
+                "purchaseDate": "Data e Blerjes",
+                "purchaser": "Blerësi",
+                "completed": "Përfunduar",
+                "titleRequired": "Ju lutem jepni një titull për pronën.",
+                "priceRequired": "Ju lutem jepni një çmim të vlefshëm.",
+                "locationRequired": "Ju lutem jepni një lokacion.",
+                "bedroomsRequired": "Ju lutem jepni numrin e dhomave të gjumit.",
+                "bathroomsRequired": "Ju lutem jepni numrin e banjove.",
+                "areaRequired": "Ju lutem jepni një sipërfaqe të vlefshme.",
+                "descriptionRequired": "Ju lutem jepni një përshkrim."
+            }
+        };
+
+        // Function to change language
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('selectedLanguage', lang);
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Re-render dynamic content
+            renderPropertiesFromBackend();
+            renderBlogPosts();
+        }
+
+        // Initialize the page
+        document.addEventListener("DOMContentLoaded", function() {
+            // Initialize language
+            const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+            changeLanguage(savedLanguage);
+            
+            // Set up language switcher
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const lang = this.getAttribute('data-lang');
+                    changeLanguage(lang);
+                });
+            });
+            
+            // Initialize functionality
+            renderPropertiesFromBackend();
+            renderBlogPosts();
+            
+            // Check for expired blog posts every hour
+            setInterval(() => {
+                const beforeCount = userBlogPosts.length;
+                checkExpiredBlogPosts();
+                if (userBlogPosts.length !== beforeCount) {
+                    renderBlogPosts();
+                }
+            }, 60 * 60 * 1000);
+        });
+    </script>
+</body>
+</html>
